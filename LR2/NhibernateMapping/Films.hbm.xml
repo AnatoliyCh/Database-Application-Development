@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="LR2"
+                   namespace="LR2.Model">
+  <class name="Films">
+    <id name ="Id">
+      <generator class="sequence"/>
+    </id>
+    <property name="Title" column="Название"/>
+    <list name="GenresList" table="SubTuble_Genres_Film" cascade="all">
+      <key column="IdFilm"/>
+      <index column="IndexList"/>
+      <many-to-many class="Genres, NHibernateManyToMany" column="IdGenres"/>
+    </list>
+    <list name="ActorsList" table="SubTuble_Actors_Film" cascade="all">
+      <key column="IdFilm"/>
+      <index column="IndexList"/>
+      <many-to-many class="Actors, NHibernateManyToMany" column="IdActors"/>
+    </list>
+    <property name="Rating" column="Рейтинг"/>    
+    <property name="Viewed" column="Просмотрен"/>
+  </class>
+</hibernate-mapping>
