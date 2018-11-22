@@ -33,15 +33,5 @@ namespace LR2
                 }
             }
         }
-        private static void Delete()
-        {
-            Console.Write("id \n");
-            int id = Console.Read();
-            Console.Write(Singleton.Instance.Genre.Read().List<Genre>().Count + "\n");
-            Console.Write(id.GetType() + "\n");
-            Console.Write(id + "\n");
-            //Genre d = Singleton.Instance.Genre.Read().List<Genre>()[0];
-            //Singleton.Instance.Genre.Delete(d);
-        }
     }
 }
