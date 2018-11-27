@@ -27,6 +27,9 @@ namespace LR2
                     case 1:
                         Controll.Genre();
                         break;
+                    case 2:
+                        Controll.Actor();
+                        break;
                     case 0:
                         tmp = false;
                         break;

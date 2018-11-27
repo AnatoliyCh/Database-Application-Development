@@ -6,20 +6,19 @@ using System.Threading.Tasks;
 using LR2.Model;
 using LR2.View;
 using LR2.Model.Table;
-using NHibernate;
 
 namespace LR2.Controller
 {
-    class ControllGenre : IControll
+    class ControllActor : IControll
     {
         public void Read()
         {
             int key;
             bool tmp = true;
             while (tmp)
-            {                
-                PrintCMD.Genre.PrintTable();
-                PrintCMD.Genre.ReadMenu();
+            {
+                PrintCMD.Actor.PrintTable();
+                PrintCMD.Actor.ReadMenu();
                 key = PrintCMD.ReadKey();
                 switch (key)
                 {
@@ -35,14 +34,14 @@ namespace LR2.Controller
             bool tmp = true;
             while (tmp)
             {
-                PrintCMD.Genre.PrintTable();
-                PrintCMD.Genre.CreateMenu();
+                PrintCMD.Actor.PrintTable();
+                PrintCMD.Actor.CreateMenu();
                 key = PrintCMD.ReadKey();
                 switch (key)
                 {
                     case 1:
-                        string newGenre = PrintCMD.ReadLine("Новый жанр", false);
-                        Singleton.Instance.Genre.Create(new Genre { Title = newGenre });
+                        string newActor = PrintCMD.ReadLine("Новый актёр", false);
+                        Singleton.Instance.Actor.Create(new Actor { Name = newActor });
                         break;
                     case 0:
                         tmp = false;
@@ -53,31 +52,31 @@ namespace LR2.Controller
         public void Update()
         {
             int key;
-            Genre genre;//то что изменяем
-            string tmpTitle;//новое название
+            Actor actor;//то что изменяем
+            string tmpName;//новое название
             bool tmp = true;
             while (tmp)
             {
-                PrintCMD.Genre.PrintTable();
-                PrintCMD.Genre.UpdateMenu();
+                PrintCMD.Actor.PrintTable();
+                PrintCMD.Actor.UpdateMenu();
                 key = PrintCMD.ReadKey();
                 switch (key)
                 {
                     case 1://изменение по Id
                         int id = PrintCMD.ReadKey("Id", false);
-                        genre = Singleton.Instance.Genre.Read("Id", id.ToString());
-                        tmpTitle = PrintCMD.ReadLine(genre.Title, false);
-                        genre.Title = tmpTitle;
-                        Singleton.Instance.Genre.Update(genre);
-                        genre = null; tmpTitle = null;
+                        actor = Singleton.Instance.Actor.Read("Id", id.ToString());
+                        tmpName = PrintCMD.ReadLine(actor.Name, false);
+                        actor.Name = tmpName;
+                        Singleton.Instance.Actor.Update(actor);
+                        actor = null; tmpName = null;
                         break;
-                    case 2://изменение по Title
-                        tmpTitle = PrintCMD.ReadLine("Название", false);
-                        genre = Singleton.Instance.Genre.Read("Title", tmpTitle);
-                        tmpTitle = PrintCMD.ReadLine(genre.Title, false);
-                        genre.Title = tmpTitle;
-                        Singleton.Instance.Genre.Update(genre);
-                        genre = null; tmpTitle = null;
+                    case 2://изменение по Name
+                        tmpName = PrintCMD.ReadLine("Имя", false);
+                        actor = Singleton.Instance.Actor.Read("Name", tmpName);
+                        tmpName = PrintCMD.ReadLine(actor.Name, false);
+                        actor.Name = tmpName;
+                        Singleton.Instance.Actor.Update(actor);
+                        actor = null; tmpName = null;
                         break;
                     case 0:
                         tmp = false;
@@ -91,18 +90,18 @@ namespace LR2.Controller
             bool tmp = true;
             while (tmp)
             {
-                PrintCMD.Genre.PrintTable();
-                PrintCMD.Genre.DeleteMenu();
+                PrintCMD.Actor.PrintTable();
+                PrintCMD.Actor.DeleteMenu();
                 key = PrintCMD.ReadKey();
                 switch (key)
                 {
                     case 1://удаление по Id
                         int id = PrintCMD.ReadKey("Id", false);
-                        Singleton.Instance.Genre.Delete("Id", id.ToString());                     
+                        Singleton.Instance.Actor.Delete("Id", id.ToString());
                         break;
-                    case 2://удаление по Title
-                        string tmpTitle = PrintCMD.ReadLine("Название", false);
-                        Singleton.Instance.Genre.Delete("Title", tmpTitle);
+                    case 2://удаление по Name
+                        string tmpName = PrintCMD.ReadLine("Имя", false);
+                        Singleton.Instance.Actor.Delete("Name", tmpName);
                         break;
                     case 0:
                         tmp = false;
@@ -117,5 +116,6 @@ namespace LR2.Controller
         {
             throw new NotImplementedException();
         }
+        
     }
 }

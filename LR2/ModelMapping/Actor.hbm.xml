@@ -2,10 +2,10 @@
 <hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
                    assembly="LR2"
                    namespace="LR2.Model.Table">
-  <class name="Genre" table="Genres">
+  <class name="Actor" table="Actors">
     <id name ="Id">
-      <generator class="native"/>
+      <generator class="sequence"/>
     </id>
-    <property name="Title" unique-key="Title" column="Название"/>
+    <property name="Name" unique-key="Name"  column="Имя"/>
   </class>
 </hibernate-mapping>

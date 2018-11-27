@@ -14,6 +14,7 @@ namespace LR2.View
         private const int _spaceCell = 5;
         private const string _lineWrite = "==> ";
         public static PrintGenre Genre { get; } = new PrintGenre();
+        public static PrintActor Actor { get; } = new PrintActor();
         //верхний UI
         private static string[] _menuUP =
         {
@@ -34,10 +35,10 @@ namespace LR2.View
             Console.Write("\n" + _lineWrite);
             return Convert.ToInt32(Console.ReadLine());
         }
-        public static int ReadKey(string _tmp, bool indent)
+        public static int ReadKey(string str, bool indent)
         {
-            if (indent) Console.Write("\n" + _tmp + " " + _lineWrite);
-            else Console.Write(_tmp + " " + _lineWrite);
+            if (indent) Console.Write("\n" + str + " " + _lineWrite);
+            else Console.Write("[" + str + "] " + _lineWrite);
             return Convert.ToInt32(Console.ReadLine());
         }
         public static string ReadLine()
@@ -45,10 +46,10 @@ namespace LR2.View
             Console.Write("\n" + _lineWrite);
             return Console.ReadLine();
         }
-        public static string ReadLine(string _tmp, bool indent)
+        public static string ReadLine(string str, bool indent)
         {
-            if (indent) Console.Write("\n" + _tmp + " " + _lineWrite);
-            else Console.Write(_tmp + " " + _lineWrite);
+            if (indent) Console.Write("\n" + str + " " + _lineWrite);
+            else Console.Write("[" + str + "] " + _lineWrite);
             return Console.ReadLine();
         }
         public static void MenuUP()
@@ -73,6 +74,19 @@ namespace LR2.View
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine("Таблица: " + _menuUP[id - 1]);
             Console.ResetColor();
+        }
+        /// <summary>
+        /// Возвращает увеличенный в mult раз токен
+        /// </summary>
+        /// <param name="token">символ</param>
+        /// <param name="mult">token * mult</param>
+        /// <returns>строка</returns>
+        public static string GetMultipliedToken(char token, int mult)
+        {
+            string str = "";
+            for (int i = 0; i < mult; i++)
+                str += token;
+            return str;
         }
     }
 }

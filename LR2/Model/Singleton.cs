@@ -16,7 +16,7 @@ namespace LR2.Model
         private static Singleton _instance;        
         private static ISessionFactory _sessionFactory;
         public IRepository<Genre> Genre { get; } = new RepositoryGenre();
-
+        public IRepository<Actor> Actor { get; } = new RepositoryActor();
         private Singleton() { }
         public static Singleton Instance
         {
@@ -29,7 +29,8 @@ namespace LR2.Model
                     {
                         var cfg = new Configuration();//как конфигурируемся
                         cfg.Configure();//ищем файл конфига
-                        cfg.AddAssembly(typeof(Genre).Assembly);
+                        //cfg.AddAssembly(typeof(Genre).Assembly);
+                        cfg.AddAssembly("LR2");
                         _sessionFactory = cfg.BuildSessionFactory();
                         new SchemaExport(cfg).Execute(true, true, false);
                     }
@@ -41,10 +42,10 @@ namespace LR2.Model
         {
             return _sessionFactory.OpenSession();
         }
-        public IQuery Query(string _query)
-        {
-            IQuery query;
-            return query = Instance.OpenSession().CreateQuery(_query);
-        }
+        //public IQuery Query(string _query)
+        //{
+        //    IQuery query;
+        //    return query = Instance.OpenSession().CreateQuery(_query);
+        //}
     }
 }

@@ -11,8 +11,10 @@ namespace LR2.Model.Repository
     {
         //CRUD
         void Create(T obj);
-        IQuery Read();
+        IList<T> Read();//вся таблица
+        T Read(string type, string param);//читает type с param
         void Update(T obj);
-        void Delete(T obj);        
+        void Delete(string type, string param);//удаление по type
+        //All
     }
 }
