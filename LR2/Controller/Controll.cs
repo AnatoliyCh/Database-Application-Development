@@ -90,6 +90,9 @@ namespace LR2.Controller
                     case 4:
                         _controllFilm.Delete();
                         break;
+                    case 5:
+                        _controllFilm.Search();
+                        break;
                     case 0:
                         tmp = false;
                         break;

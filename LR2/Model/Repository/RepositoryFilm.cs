@@ -27,12 +27,12 @@ namespace LR2.Model.Repository
         {
             return Singleton.Instance.OpenSession().CreateQuery("from Film").List<Film>();
         }
-        Film IRepository<Film>.Read(string type, string param)
+        IList<Film> IRepository<Film>.Read(string type, string param)
         {
             IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " = :param");
             if (type == "Id") query.SetParameter("param", int.Parse(param));
             else query.SetParameter("param", param);
-            return query.List<Film>()[0];
+            return query.List<Film>();
         }
         void IRepository<Film>.Update(Film obj)
         {

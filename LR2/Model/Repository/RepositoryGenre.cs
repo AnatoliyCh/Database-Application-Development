@@ -26,12 +26,12 @@ namespace LR2.Model.Repository
         {
             return Singleton.Instance.OpenSession().CreateQuery("from Genre").List<Genre>();
         }
-        Genre IRepository<Genre>.Read(string type, string param)
+        IList<Genre> IRepository<Genre>.Read(string type, string param)
         {
             IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT g FROM Genre g WHERE g." + type + " = :param");
             if (type == "Id") query.SetParameter("param", int.Parse(param));
             else query.SetParameter("param", param);
-            return query.List<Genre>()[0];
+            return query.List<Genre>();
         }
         void IRepository<Genre>.Update(Genre obj)
         {

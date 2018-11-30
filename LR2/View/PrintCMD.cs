@@ -34,7 +34,8 @@ namespace LR2.View
         public static int ReadKey()
         {
             Console.Write("\n" + _lineWrite);
-            return Convert.ToInt32(Console.ReadLine());
+            try { return Convert.ToInt32(Console.ReadLine()); }
+            catch (Exception) { return -1; }
         }
         public static int ReadKey(string str, bool indent)
         {
@@ -67,7 +68,7 @@ namespace LR2.View
             for (int i = 0; i < _menuItem.Length; i++)
                 Console.WriteLine(" {0, " + SpaceCellId + "} {1, " + _spaceCell + "}", "[" + (i + 1) + "]", _menuItem[i]);
             if (id == 3)
-                Console.WriteLine(" {0, " + SpaceCellId + "} {1, " + _spaceCell + "}", "[" + _menuItem.Length + "]", "Поиск");
+                Console.WriteLine(" {0, " + SpaceCellId + "} {1, " + _spaceCell + "}", "[" + (_menuItem.Length + 1) + "]", "Поиск");
             Console.WriteLine(" {0, " + SpaceCellId + "} {1, " + _spaceCell + "}", "[" + 0 + "]", "Назад");
         }
         public static void ThisMenu(int id)

@@ -32,7 +32,8 @@ namespace LR2.View
         }
         public void ReadMenu()
         {
-            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[?]", "Обновить");
+            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[1]", "Посмотреть конкретный");
+            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[2]", "Обновить");
             Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[" + 0 + "]", "Назад");
         }
         public void CreateMenu()
@@ -53,21 +54,28 @@ namespace LR2.View
             Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[" + 0 + "]", "Назад");
         }
         //дополнительное отображение
-        public void CreateFilm(Film film)//показываем фильм, который создаем
+        public void CurrentFilm(Film film)//показываем фильм, который создаем
         {
             Console.Clear();
             Console.Write("\n");
             Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", "Название:", film.Title);
             Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", "Рейтинг:", film.Rating);
-            Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", "Просмотрено:", film.Viewed);
+            Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", "Просмотрено:", film.Viewed);            
             Console.WriteLine(" {0, " + _spaceCellTableNarrow + "}", "Жанры:");
-            for (int i = 0; i < film.GenresList.Count; i++)
-                Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", i, (film.GenresList as List<Genre>)[i].Title);
+            int i = 0;
+            foreach (var item in film.GenresList)
+            {
+                Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", i, item.Title);
+                i++;
+            }
+            i = 0;
             Console.WriteLine(" {0, " + _spaceCellTableNarrow + "}", "Актеры:");
-            for (int i = 0; i < film.GenresList.Count; i++)
-                Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", i, (film.ActorsList as List<Actor>)[i].Name);
+            foreach (var item in film.ActorsList)
+            {
+                Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", i, item.Name);
+                i++;
+            }
             Console.Write("\n");
-
         }
         public void SubCreateMenu()//меню для создания фильма
         {       

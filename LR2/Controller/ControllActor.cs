@@ -64,7 +64,7 @@ namespace LR2.Controller
                 {
                     case 1://изменение по Id
                         int id = PrintCMD.ReadKey("Id", false);
-                        actor = Singleton.Instance.Actor.Read("Id", id.ToString());
+                        actor = Singleton.Instance.Actor.Read("Id", id.ToString())[0];
                         tmpName = PrintCMD.ReadLine(actor.Name, false);
                         actor.Name = tmpName;
                         Singleton.Instance.Actor.Update(actor);
@@ -72,7 +72,7 @@ namespace LR2.Controller
                         break;
                     case 2://изменение по Name
                         tmpName = PrintCMD.ReadLine("Имя", false);
-                        actor = Singleton.Instance.Actor.Read("Name", tmpName);
+                        actor = Singleton.Instance.Actor.Read("Name", tmpName)[0];
                         tmpName = PrintCMD.ReadLine(actor.Name, false);
                         actor.Name = tmpName;
                         Singleton.Instance.Actor.Update(actor);

@@ -16,6 +16,7 @@ namespace LR2
         static void Main(string[] args)
         {
             Singleton.Instance.OpenSession();//открываем сессию
+            CreateBeginItem();
             int key;
             bool tmp = true;
             while (tmp)
@@ -38,6 +39,21 @@ namespace LR2
                         break;
                 }
             }
+        }
+        static void CreateBeginItem()
+        {
+            Singleton.Instance.Genre.Create(new Genre { Title = "Боевик" });
+            Singleton.Instance.Genre.Create(new Genre { Title = "Вестерн" });
+            Singleton.Instance.Genre.Create(new Genre { Title = "Детектив" });
+            Singleton.Instance.Actor.Create(new Actor { Name = "А. Невский" });
+            Singleton.Instance.Actor.Create(new Actor { Name = "кто-то" });
+            Singleton.Instance.Actor.Create(new Actor { Name = "чувак" });
+            Film t = new Film()
+            {
+                Title = "tt"
+            };
+            t.GenresList.Add(Singleton.Instance.Genre.Read("Id", "1")[0]);
+            Singleton.Instance.Film.Create(t);
         }
     }
 }

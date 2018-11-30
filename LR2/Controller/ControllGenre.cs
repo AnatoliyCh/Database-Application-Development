@@ -65,7 +65,7 @@ namespace LR2.Controller
                 {
                     case 1://изменение по Id
                         int id = PrintCMD.ReadKey("Id", false);
-                        genre = Singleton.Instance.Genre.Read("Id", id.ToString());
+                        genre = Singleton.Instance.Genre.Read("Id", id.ToString())[0];
                         tmpTitle = PrintCMD.ReadLine(genre.Title, false);
                         genre.Title = tmpTitle;
                         Singleton.Instance.Genre.Update(genre);
@@ -73,7 +73,7 @@ namespace LR2.Controller
                         break;
                     case 2://изменение по Title
                         tmpTitle = PrintCMD.ReadLine("Название", false);
-                        genre = Singleton.Instance.Genre.Read("Title", tmpTitle);
+                        genre = Singleton.Instance.Genre.Read("Title", tmpTitle)[0];
                         tmpTitle = PrintCMD.ReadLine(genre.Title, false);
                         genre.Title = tmpTitle;
                         Singleton.Instance.Genre.Update(genre);
