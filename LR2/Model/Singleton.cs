@@ -17,6 +17,7 @@ namespace LR2.Model
         private static ISessionFactory _sessionFactory;
         public IRepository<Genre> Genre { get; } = new RepositoryGenre();
         public IRepository<Actor> Actor { get; } = new RepositoryActor();
+        public IRepository<Film> Film { get; } = new RepositoryFilm();
         private Singleton() { }
         public static Singleton Instance
         {
@@ -29,7 +30,6 @@ namespace LR2.Model
                     {
                         var cfg = new Configuration();//как конфигурируемся
                         cfg.Configure();//ищем файл конфига
-                        //cfg.AddAssembly(typeof(Genre).Assembly);
                         cfg.AddAssembly("LR2");
                         _sessionFactory = cfg.BuildSessionFactory();
                         new SchemaExport(cfg).Execute(true, true, false);

@@ -15,6 +15,7 @@ namespace LR2.View
         private const string _lineWrite = "==> ";
         public static PrintGenre Genre { get; } = new PrintGenre();
         public static PrintActor Actor { get; } = new PrintActor();
+        public static PrintFilm Film { get; } = new PrintFilm();
         //верхний UI
         private static string[] _menuUP =
         {

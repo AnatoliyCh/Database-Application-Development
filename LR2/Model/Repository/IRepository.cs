@@ -16,5 +16,10 @@ namespace LR2.Model.Repository
         void Update(T obj);
         void Delete(string type, string param);//удаление по type
         //All
+        /// <summary>
+        /// Количество элементов в таблице
+        /// </summary>
+        /// <returns></returns>
+        long GetAmountElements();
     }
 }

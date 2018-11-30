@@ -30,6 +30,9 @@ namespace LR2
                     case 2:
                         Controll.Actor();
                         break;
+                    case 3:
+                        Controll.Film();
+                        break;
                     case 0:
                         tmp = false;
                         break;

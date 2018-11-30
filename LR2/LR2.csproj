@@ -75,10 +75,12 @@
   <ItemGroup>
     <Compile Include="Controller\Controll.cs" />
     <Compile Include="Controller\ControllActor.cs" />
+    <Compile Include="Controller\ControllFilm.cs" />
     <Compile Include="Controller\ControllGenre.cs" />
     <Compile Include="Controller\IControll.cs" />
     <Compile Include="Model\Repository\IRepository.cs" />
     <Compile Include="Model\Repository\RepositoryActor.cs" />
+    <Compile Include="Model\Repository\RepositoryFilm.cs" />
     <Compile Include="Model\Repository\RepositoryGenre.cs" />
     <Compile Include="Model\Singleton.cs" />
     <Compile Include="Model\Table\Actor.cs" />
@@ -88,6 +90,7 @@
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="View\PrintActor.cs" />
     <Compile Include="View\PrintCMD.cs" />
+    <Compile Include="View\PrintFilm.cs" />
     <Compile Include="View\PrintGenre.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -106,6 +109,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ModelMapping\Genre.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ModelMapping\Film.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -8,9 +9,9 @@ using NHibernate;
 
 namespace LR2.Model.Repository
 {
-    class RepositoryGenre : IRepository<Genre>
+    class RepositoryFilm : IRepository<Film>
     {
-        void IRepository<Genre>.Create(Genre obj)
+        void IRepository<Film>.Create(Film obj)
         {
             using (ISession session = Singleton.Instance.OpenSession())
             {
@@ -22,18 +23,18 @@ namespace LR2.Model.Repository
                 }
             }
         }
-        IList<Genre> IRepository<Genre>.Read()
+        IList<Film> IRepository<Film>.Read()
         {
-            return Singleton.Instance.OpenSession().CreateQuery("from Genre").List<Genre>();
+            return Singleton.Instance.OpenSession().CreateQuery("from Film").List<Film>();
         }
-        Genre IRepository<Genre>.Read(string type, string param)
+        Film IRepository<Film>.Read(string type, string param)
         {
-            IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT g FROM Genre g WHERE g." + type + " = :param");
+            IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " = :param");
             if (type == "Id") query.SetParameter("param", int.Parse(param));
             else query.SetParameter("param", param);
-            return query.List<Genre>()[0];
+            return query.List<Film>()[0];
         }
-        void IRepository<Genre>.Update(Genre obj)
+        void IRepository<Film>.Update(Film obj)
         {
             using (ISession session = Singleton.Instance.OpenSession())
             {
@@ -44,7 +45,7 @@ namespace LR2.Model.Repository
                 }
             }
         }
-        void IRepository<Genre>.Delete(string type, string param)
+        void IRepository<Film>.Delete(string type, string param)
         {
             using (ISession session = Singleton.Instance.OpenSession())
             {
@@ -57,9 +58,9 @@ namespace LR2.Model.Repository
             }
         }
 
-        long IRepository<Genre>.GetAmountElements()
+        long IRepository<Film>.GetAmountElements()
         {
-            IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Genre");
+            IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Film");
             return (long)query.UniqueResult();
         }
     }

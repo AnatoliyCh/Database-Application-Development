@@ -11,6 +11,7 @@ namespace LR2.Controller
     {
         private static IControll _controllGenre = new ControllGenre();
         private static IControll _controllActor = new ControllActor();
+        private static IControll _controllFilm = new ControllFilm();
         public static void Genre()
         {
             int key;
@@ -60,6 +61,34 @@ namespace LR2.Controller
                         break;
                     case 4:
                         _controllActor.Delete();
+                        break;
+                    case 0:
+                        tmp = false;
+                        break;
+                }
+            }
+        }
+        public static void Film()
+        {
+            int key;
+            bool tmp = true;
+            while (tmp)
+            {
+                PrintCMD.MenuItem(3);
+                key = PrintCMD.ReadKey();
+                switch (key)
+                {
+                    case 1:
+                        _controllFilm.Read();
+                        break;
+                    case 2:
+                        _controllFilm.Create();
+                        break;
+                    case 3:
+                        _controllFilm.Update();
+                        break;
+                    case 4:
+                        _controllFilm.Delete();
                         break;
                     case 0:
                         tmp = false;

@@ -56,5 +56,11 @@ namespace LR2.Model.Repository
                 }
             }
         }
+
+        long IRepository<Actor>.GetAmountElements()
+        {
+            IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Actor");
+            return (long)query.UniqueResult();
+        }
     }
 }
