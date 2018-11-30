@@ -30,6 +30,22 @@ namespace LR2.View
             }                
             Console.Write("\n");
         }
+        public void PrintTable(IList<Film> films)
+        {
+            Console.Write("\n");
+            string lineWide = PrintCMD.GetMultipliedToken('-', _spaceCellTableWide);
+            string lineNarrow = PrintCMD.GetMultipliedToken('-', _spaceCellTableNarrow);
+            Console.WriteLine("|{0, " + _spaceCellTableNarrow + "}|{1, " + _spaceCellTableWide + "}|{2, " + _spaceCellTableNarrow + "}|{3, " + _spaceCellTableNarrow + "}|", "Id", "Название", "Рейтинг", "Просмотрено");
+            Console.WriteLine("|{0, " + _spaceCellTableNarrow + "}|{1, " + _spaceCellTableWide + "}|{2, " + _spaceCellTableNarrow + "}|{3, " + _spaceCellTableNarrow + "}|", lineNarrow, lineWide, lineNarrow, lineNarrow);
+            string tmpViewed;//для отображения просмотренного
+            foreach (var item in films)
+            {
+                if (item.Viewed) tmpViewed = "+";
+                else tmpViewed = "-";
+                Console.WriteLine("|{0, " + _spaceCellTableNarrow + "}|{1, " + _spaceCellTableWide + "}|{2, " + _spaceCellTableNarrow + "}|{3, " + _spaceCellTableNarrow + "}|", item.Id, item.Title, item.Rating, tmpViewed);
+            }
+            Console.Write("\n");
+        }
         public void ReadMenu()
         {
             Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[1]", "Посмотреть конкретный");
@@ -52,6 +68,16 @@ namespace LR2.View
             Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[1]", "Удалить по Id");
             Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[2]", "Удалить по Названию");
             Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[" + 0 + "]", "Назад");
+        }
+        //all
+        public void SearchMenu()
+        {
+            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "}", "Поиск по:");
+            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[1]", "Название");
+            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[2]", "Жанр");
+            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[3]", "Актёр");
+            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[4]", "Рейтинг");
+            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[" + 0 + "]", "Отмена");
         }
         //дополнительное отображение
         public void CurrentFilm(Film film)//показываем фильм, который создаем

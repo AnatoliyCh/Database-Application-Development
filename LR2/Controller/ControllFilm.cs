@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using LR2.Model;
 using LR2.View;
 using LR2.Model.Table;
+using LR2.Model.Repository;
 
 namespace LR2.Controller
 {
@@ -122,7 +123,39 @@ namespace LR2.Controller
         /// </summary>
         public void Search()
         {
-            throw new NotImplementedException();
+            int key;
+            bool tmp = true;
+            string tmpStr, tmpStr1;
+            int vewedKey = 0;
+            while (tmp)
+            {
+                PrintCMD.Film.PrintTable();
+                PrintCMD.Film.SearchMenu();
+                key = PrintCMD.ReadKey();
+                switch (key)
+                {
+                    case 1:
+                        tmpStr = PrintCMD.ReadLine("название", false);
+                        vewedKey = PrintCMD.ReadKey("0 - всё 1 - просмотрено 2 - непросмотрено", false);
+                        switch (vewedKey)
+                        {
+                            case 0:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("Title", tmpStr, RepositoryFilm.ViewedType.Full));
+                                break;
+                            case 1:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("Title", tmpStr, RepositoryFilm.ViewedType.TRUE));
+                                break;                                
+                            case 2:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("Title", tmpStr, RepositoryFilm.ViewedType.FALSE));
+                                break;
+                        }
+                        PrintCMD.ReadKey("enter -> 1", false);
+                        break;
+                    case 0:
+                        tmp = false;
+                        break;
+                }
+            }
         }
         //дополнительные функции
         private void SubCreate(Film film)//меню создания фильма

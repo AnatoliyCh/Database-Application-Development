@@ -11,6 +11,12 @@ namespace LR2.Model.Repository
 {
     class RepositoryFilm : IRepository<Film>
     {
+        public enum ViewedType
+        {
+            Full = 0,
+            TRUE = 1,
+            FALSE = 2
+        };
         void IRepository<Film>.Create(Film obj)
         {
             using (ISession session = Singleton.Instance.OpenSession())
@@ -62,6 +68,26 @@ namespace LR2.Model.Repository
         {
             IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Film");
             return (long)query.UniqueResult();
+        }
+        public IList<Film> Search(string type, string param, ViewedType viewedType)            
+        {
+            IQuery query;
+            switch (viewedType)
+            {
+                case ViewedType.Full:
+                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " = :param");
+                    query.SetParameter("param", param);
+                    return query.List<Film>();
+                case ViewedType.TRUE:
+                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " = :param and f.Viewed = true");
+                    query.SetParameter("param", param);
+                    return query.List<Film>();
+                case ViewedType.FALSE:
+                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " = :param and f.Viewed = false");
+                    query.SetParameter("param", param);
+                    return query.List<Film>();
+            }            
+            return null;
         }
     }
 }
