@@ -42,10 +42,5 @@ namespace LR2.Model
         {
             return _sessionFactory.OpenSession();
         }
-        //public IQuery Query(string _query)
-        //{
-        //    IQuery query;
-        //    return query = Instance.OpenSession().CreateQuery(_query);
-        //}
     }
 }

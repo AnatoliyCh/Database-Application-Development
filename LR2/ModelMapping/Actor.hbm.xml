@@ -4,7 +4,9 @@
                    namespace="LR2.Model.Table">
   <class name="Actor" table="Actors">
     <id name ="Id">
-      <generator class="sequence"/>
+      <generator class="sequence">
+        <param name="sequence">Actors_sequence</param>
+      </generator>
     </id>
     <property name="Name" unique-key="Name"  column="Имя"/>
   </class>

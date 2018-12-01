@@ -85,6 +85,7 @@
     <Compile Include="Model\Singleton.cs" />
     <Compile Include="Model\Table\Actor.cs" />
     <Compile Include="Model\Table\Film.cs" />
+    <Compile Include="Model\Table\Films_Genres.cs" />
     <Compile Include="Model\Table\Genre.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -114,6 +115,11 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Include="ModelMapping\Film.hbm.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="ModelMapping\Films_Genres.hbm.xml">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </EmbeddedResource>
   </ItemGroup>

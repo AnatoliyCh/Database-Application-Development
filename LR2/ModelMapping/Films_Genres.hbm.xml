@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<hibernate-mapping xmlns="urn:nhibernate-mapping-2.2"
+                   assembly="LR2"
+                   namespace="LR2.Model.Table">
+  <class name="Films_Genres" table="Films_Genres">
+    <id name ="Id" unsaved-value="0">
+      <generator class="sequence">
+        <param name="sequence">FG_sequence</param>        
+      </generator>
+    </id>
+    <property name="Id_Film" column="Фильм"/>
+    <property name="Id_Genres" column="Жанр"/>
+    <property name="Index_List" column="Id_в_листе"/>
+  </class>
+</hibernate-mapping>

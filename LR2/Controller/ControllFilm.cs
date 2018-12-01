@@ -22,19 +22,27 @@ namespace LR2.Controller
                 PrintCMD.Film.PrintTable();
                 PrintCMD.Film.ReadMenu();
                 key = PrintCMD.ReadKey();
-                switch (key)
-                {
-                    case 1:
-                        int id = PrintCMD.ReadKey("Id", false);
-                        film = Singleton.Instance.Film.Read("Id", id.ToString())[0];
-                        PrintCMD.Film.CurrentFilm(film);
-                        PrintCMD.ReadKey("enter -> 1", false);
-                        film = null;
-                        break;
-                    case 0:
-                        tmp = false;
-                        break;
-                }
+                if (Singleton.Instance.Film.GetAmountElements() == 0)
+                    switch (key)
+                    {
+                        case 0:
+                            tmp = false;
+                            break;
+                    }
+                else
+                    switch (key)
+                    {
+                        case 1:
+                            int id = PrintCMD.ReadKey("Id", false);
+                            film = Singleton.Instance.Film.Read("Id", id.ToString())[0];
+                            PrintCMD.Film.CurrentFilm(film);
+                            PrintCMD.ReadKey("enter -> 1", false);
+                            film = null;
+                            break;
+                        case 0:
+                            tmp = false;
+                            break;
+                    }
             }
         }
         public void Create()
@@ -136,7 +144,7 @@ namespace LR2.Controller
                 {
                     case 1://название
                         tmpStr = PrintCMD.ReadLine("название", false);
-                        vewedKey = PrintCMD.ReadKey("0 - всё 1 - просмотрено 2 - непросмотрено", false);
+                        vewedKey = PrintCMD.ReadKey("0 - всё \n 1 - просмотрено \n 2 - непросмотрено", false);
                         switch (vewedKey)
                         {
                             case 0:
@@ -154,7 +162,6 @@ namespace LR2.Controller
                     case 2://жанр
                         tmpStr = PrintCMD.ReadLine("жанр", false);
                         vewedKey = PrintCMD.ReadKey("0 - всё 1 - просмотрено 2 - непросмотрено", false);
-                        (Singleton.Instance.Film as RepositoryFilm).JoinSearch();
                         //switch (vewedKey)
                         //{
                         //    case 0:

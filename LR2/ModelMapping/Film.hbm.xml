@@ -4,19 +4,11 @@
                    namespace="LR2.Model.Table">
   <class name="Film" table="Films">
     <id name ="Id">
-      <generator class="sequence"/>
+      <generator class="sequence">
+        <param name="sequence">Films_sequence</param>
+      </generator>
     </id>
     <property name="Title" column="Название"/>
-    <list name="GenresList" table="SubTuble_Genres_Film" inverse="true" cascade="all">
-      <key column="Id_Film"/>
-      <index column="Index_List"/>
-      <many-to-many class="Genre, NHibernateManyToMany" column="Id_Genres"/>
-    </list>
-    <list name="ActorsList" table="SubTuble_Actors_Film" inverse="true" cascade="all">
-      <key column="Id_Film"/>
-      <index column="Index_List"/>
-      <many-to-many class="Actor, NHibernateManyToMany" column="Id_Actors"/>
-    </list>
     <property name="Rating" column="Рейтинг"/>
     <property name="Viewed" column="Просмотрен"/>
   </class>

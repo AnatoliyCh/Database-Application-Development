@@ -48,7 +48,8 @@ namespace LR2.View
         }
         public void ReadMenu()
         {
-            Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[1]", "Посмотреть конкретный");
+            if (Singleton.Instance.Film.GetAmountElements() > 0)
+                Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[1]", "Посмотреть конкретный");
             Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[2]", "Обновить");
             Console.WriteLine(" {0, " + PrintCMD.SpaceCellId + "} {1, " + _spaceCell + "}", "[" + 0 + "]", "Назад");
         }
@@ -91,14 +92,14 @@ namespace LR2.View
             int i = 0;
             foreach (var item in film.GenresList)
             {
-                Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", i, item.Title);
+                Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", (i + 1) + ":", item.Title);
                 i++;
             }
             i = 0;
             Console.WriteLine(" {0, " + _spaceCellTableNarrow + "}", "Актеры:");
             foreach (var item in film.ActorsList)
             {
-                Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", i, item.Name);
+                Console.WriteLine(" {0, " + _spaceCellTableNarrow + "} {1, " + _spaceCellTableWide + "}", (i + 1) + ":", item.Name);
                 i++;
             }
             Console.Write("\n");
