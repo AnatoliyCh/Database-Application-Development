@@ -62,5 +62,17 @@ namespace LR2.Model.Repository
             IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Genre");
             return (long)query.UniqueResult();
         }
+
+        void IRepository<Genre>.Delete(Genre obj)
+        {
+            using (ISession session = Singleton.Instance.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Save(obj);
+                    transaction.Commit();
+                }
+            }
+        }
     }
 }

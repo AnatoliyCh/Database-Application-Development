@@ -24,8 +24,7 @@ namespace LR2.Model.Repository
                 using (ITransaction transaction = session.BeginTransaction())
                 {
                     session.Save(obj);
-                    try { transaction.Commit(); }
-                    catch (Exception) { }
+                    transaction.Commit();
                 }
             }
         }
@@ -57,19 +56,29 @@ namespace LR2.Model.Repository
             {
                 using (ITransaction transaction = session.BeginTransaction())
                 {
-                    IQuery query = Singleton.Instance.OpenSession().CreateQuery("DELETE FROM Genre g WHERE g." + type + " = :param");
+                    IQuery query = Singleton.Instance.OpenSession().CreateQuery("DELETE FROM Film f WHERE f." + type + " = :param");
                     if (type == "Id") query.SetParameter("param", int.Parse(param)).ExecuteUpdate();
                     else query.SetParameter("param", param).ExecuteUpdate();
                 }
             }
         }
-
+        void IRepository<Film>.Delete(Film obj)
+        {
+            using (ISession session = Singleton.Instance.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    session.Delete(obj);
+                    transaction.Commit();
+                }
+            }
+        }
         long IRepository<Film>.GetAmountElements()
         {
             IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Film");
             return (long)query.UniqueResult();
         }
-        public IList<Film> Search(string type, string param, ViewedType viewedType)            
+        public IList<Film> Search(string type, string param, ViewedType viewedType)
         {
             IQuery query;
             switch (viewedType)
@@ -88,6 +97,15 @@ namespace LR2.Model.Repository
                     return query.List<Film>();
             }            
             return null;
+        }
+        public void JoinSearch()
+        {
+            IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT f from Film INNER JOIN SubTuble_Genres_Film s WHERE SubTuble_Genres_Film.Id_Film = 8 AND SubTuble_Genres_Film.Id_Genres = Боевик");
+            IList<Film> list = query.List<Film>();
+            foreach (var arr in list)
+            {
+                Console.WriteLine(arr.Title);
+            }
         }
     }
 }

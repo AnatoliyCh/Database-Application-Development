@@ -15,6 +15,7 @@ namespace LR2.Model.Repository
         IList<T> Read(string type, string param);//читает type с param
         void Update(T obj);
         void Delete(string type, string param);//удаление по type
+        void Delete(T obj);//удаление по obj
         //All
         /// <summary>
         /// Количество элементов в таблице

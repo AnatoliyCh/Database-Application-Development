@@ -56,11 +56,22 @@ namespace LR2.Model.Repository
                 }
             }
         }
+        void IRepository<Actor>.Delete(Actor obj)
+        {
+            using (ISession session = Singleton.Instance.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    transaction.Commit();
+                }
+            }
+        }
 
         long IRepository<Actor>.GetAmountElements()
         {
             IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Actor");
             return (long)query.UniqueResult();
         }
+        
     }
 }

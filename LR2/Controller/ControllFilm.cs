@@ -110,7 +110,7 @@ namespace LR2.Controller
                         break;
                     case 2://удаление по Name
                         string tmpTitle = PrintCMD.ReadLine("Имя", false);
-                        Singleton.Instance.Film.Delete("Name", tmpTitle);
+                        Singleton.Instance.Film.Delete("Title", tmpTitle);
                         break;
                     case 0:
                         tmp = false;
@@ -134,7 +134,7 @@ namespace LR2.Controller
                 key = PrintCMD.ReadKey();
                 switch (key)
                 {
-                    case 1:
+                    case 1://название
                         tmpStr = PrintCMD.ReadLine("название", false);
                         vewedKey = PrintCMD.ReadKey("0 - всё 1 - просмотрено 2 - непросмотрено", false);
                         switch (vewedKey)
@@ -150,6 +150,30 @@ namespace LR2.Controller
                                 break;
                         }
                         PrintCMD.ReadKey("enter -> 1", false);
+                        break;
+                    case 2://жанр
+                        tmpStr = PrintCMD.ReadLine("жанр", false);
+                        vewedKey = PrintCMD.ReadKey("0 - всё 1 - просмотрено 2 - непросмотрено", false);
+                        (Singleton.Instance.Film as RepositoryFilm).JoinSearch();
+                        //switch (vewedKey)
+                        //{
+                        //    case 0:
+                        //        PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("GenresList", tmpStr, RepositoryFilm.ViewedType.Full));
+                        //        break;
+                        //    case 1:
+                        //        PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("GenresList", tmpStr, RepositoryFilm.ViewedType.TRUE));
+                        //        break;
+                        //    case 2:
+                        //        PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("GenresList", tmpStr, RepositoryFilm.ViewedType.FALSE));
+                        //        break;
+                        //}
+                        PrintCMD.ReadKey("enter -> 1", false);
+                        break;
+                    case 3://актёру
+
+                        break;
+                    case 4://рейтингу
+
                         break;
                     case 0:
                         tmp = false;
