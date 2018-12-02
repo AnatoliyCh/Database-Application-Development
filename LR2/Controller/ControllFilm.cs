@@ -36,7 +36,7 @@ namespace LR2.Controller
                             int id = PrintCMD.ReadKey("Id", false);
                             film = Singleton.Instance.Film.Read("Id", id.ToString())[0];
                             PrintCMD.Film.CurrentFilm(film);
-                            PrintCMD.ReadKey("enter -> 1", false);
+                            PrintCMD.ReadKey();
                             film = null;
                             break;
                         case 0:
@@ -126,14 +126,11 @@ namespace LR2.Controller
                 }
             }
         }
-        /// <summary>
-        /// VOID
-        /// </summary>
         public void Search()
         {
             int key;
             bool tmp = true;
-            string tmpStr, tmpStr1;
+            string tmpStr;
             int vewedKey = 0;
             while (tmp)
             {
@@ -157,30 +154,64 @@ namespace LR2.Controller
                                 PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchTableFilms("Title =", tmpStr, RepositoryFilm.ViewedType.FALSE));
                                 break;
                         }
-                        PrintCMD.ReadKey("enter -> 1", false);
+                        tmpStr = "";
+                        PrintCMD.ReadKey();
                         break;
                     case 2://жанр
-                        tmpStr = PrintCMD.ReadLine("жанр", false);
+                        PrintCMD.Genre.PrintTable();
+                        int tmpIdGenre = PrintCMD.ReadKey("Id жанра", false);
                         vewedKey = PrintCMD.ReadKey("0 - всё \n 1 - просмотрено \n 2 - непросмотрено", false);
-                        //switch (vewedKey)
-                        //{
-                        //    case 0:
-                        //        PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("GenresList", tmpStr, RepositoryFilm.ViewedType.Full));
-                        //        break;
-                        //    case 1:
-                        //        PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("GenresList", tmpStr, RepositoryFilm.ViewedType.TRUE));
-                        //        break;
-                        //    case 2:
-                        //        PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("GenresList", tmpStr, RepositoryFilm.ViewedType.FALSE));
-                        //        break;
-                        //}
-                        PrintCMD.ReadKey("enter -> 1", false);
+                        switch (vewedKey)
+                        {
+                            case 0:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchFilmsCascade(tmpIdGenre, RepositoryFilm.Subtable.Ganres, RepositoryFilm.ViewedType.Full));
+                                break;
+                            case 1:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchFilmsCascade(tmpIdGenre, RepositoryFilm.Subtable.Ganres, RepositoryFilm.ViewedType.TRUE));
+                                break;
+                            case 2:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchFilmsCascade(tmpIdGenre, RepositoryFilm.Subtable.Ganres, RepositoryFilm.ViewedType.FALSE));
+                                break;
+                        }
+                        PrintCMD.ReadKey();
                         break;
                     case 3://актёру
-
+                        PrintCMD.Actor.PrintTable();
+                        int tmpIdActor = PrintCMD.ReadKey("Id актёра", false);
+                        vewedKey = PrintCMD.ReadKey("0 - всё \n 1 - просмотрено \n 2 - непросмотрено", false);
+                        switch (vewedKey)
+                        {
+                            case 0:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchFilmsCascade(tmpIdActor, RepositoryFilm.Subtable.Actors, RepositoryFilm.ViewedType.Full));
+                                break;
+                            case 1:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchFilmsCascade(tmpIdActor, RepositoryFilm.Subtable.Actors, RepositoryFilm.ViewedType.TRUE));
+                                break;
+                            case 2:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchFilmsCascade(tmpIdActor, RepositoryFilm.Subtable.Actors, RepositoryFilm.ViewedType.FALSE));
+                                break;
+                        }
+                        PrintCMD.ReadKey();
                         break;
                     case 4://рейтингу
-
+                        float tmpRating;//выставляемый рейтинг
+                        try { tmpRating = float.Parse(PrintCMD.ReadLine("рейтинг -,-", false)); }
+                        catch (Exception) { tmpRating = 0; }
+                        vewedKey = PrintCMD.ReadKey("0 - всё \n 1 - просмотрено \n 2 - непросмотрено", false);
+                        tmpStr = PrintCMD.ReadLine("условие", false);
+                        switch (vewedKey)
+                        {
+                            case 0:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchTableFilms("Rating " + tmpStr, tmpRating.ToString(), RepositoryFilm.ViewedType.Full));
+                                break;
+                            case 1:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchTableFilms("Rating " + tmpStr, tmpRating.ToString(), RepositoryFilm.ViewedType.TRUE));
+                                break;
+                            case 2:
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchTableFilms("Rating " + tmpStr, tmpRating.ToString(), RepositoryFilm.ViewedType.FALSE));
+                                break;
+                        }
+                        PrintCMD.ReadKey();
                         break;
                     case 0:
                         tmp = false;

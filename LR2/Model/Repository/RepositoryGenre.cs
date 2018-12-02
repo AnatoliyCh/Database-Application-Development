@@ -56,13 +56,6 @@ namespace LR2.Model.Repository
                 }
             }
         }
-
-        long IRepository<Genre>.GetAmountElements()
-        {
-            IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Genre");
-            return (long)query.UniqueResult();
-        }
-
         void IRepository<Genre>.Delete(Genre obj)
         {
             using (ISession session = Singleton.Instance.OpenSession())
@@ -74,5 +67,10 @@ namespace LR2.Model.Repository
                 }
             }
         }
+        long IRepository<Genre>.GetAmountElements()
+        {
+            IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Genre");
+            return (long)query.UniqueResult();
+        }        
     }
 }
