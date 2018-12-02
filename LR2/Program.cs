@@ -54,7 +54,7 @@ namespace LR2
             };
             t.GenresList.Add(Singleton.Instance.Genre.Read("Id", "1")[0]);
             t.GenresList.Add(Singleton.Instance.Genre.Read("Id", "2")[0]);
-            //Singleton.Instance.Film.Create(t);
+            Singleton.Instance.Film.Create(t);
         }
     }
 }

@@ -121,11 +121,9 @@ namespace LR2.Model.Repository
             ICollection<Genre> tmpList = new List<Genre>();//список жанров
             IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT fg FROM Films_Genres fg WHERE fg.Id_Film = :param");
             query.SetParameter("param", obj.Id);
-
             foreach (var item in query.List<Films_Genres>())
                 tmpList.Add(Singleton.Instance.Genre.Read("Id", item.Id_Genres.ToString())[0]);
-            tmpList.OrderBy(item => item.Id);//сортировка по id;
-            tmpList = SortListGenre(tmpList, query.List<Films_Genres>());//сортировка по оригиналу
+            tmpList = SortListGenre(tmpList, query.List<Films_Genres>());//сортировка по Index_List
             return tmpList;
         }
         //обновление связанных строчек с фильмом в таблице Films_Genres
@@ -149,9 +147,8 @@ namespace LR2.Model.Repository
                 foreach (var item in Singleton.Instance.Film.Read(type, param))
                     tmpList.Add(item.Id);
                 //удаляем
-                IQuery query = Singleton.Instance.OpenSession().CreateQuery("DELETE FROM Films_Genres fg WHERE fg.Id_Film = :param");
-                foreach (var item in tmpList)
-                    query.SetParameter("param", item).ExecuteUpdate();
+                IQuery query = Singleton.Instance.OpenSession().CreateQuery("DELETE FROM Films_Genres fg WHERE fg.Id_Film IN (:param)");
+                query.SetParameterList("param", tmpList).ExecuteUpdate();
             }
         }
         //сортировка листа жанров по Index_List
@@ -162,10 +159,8 @@ namespace LR2.Model.Repository
             for (int i = 0; i < films_Genres.Count; i++)
             {
                 foreach (var item in films_Genres)
-                {
                     if (item.Index_List == minId)
                         tmpList.Add((listGenre as List<Genre>)[(listGenre as List<Genre>).FindIndex(obj => Equals(obj.Id, item.Id_Genres))]);
-                }
                 minId++;
             }                
             return tmpList;
@@ -186,45 +181,52 @@ namespace LR2.Model.Repository
             return tmpList;
         }
 
-
-        public IList<Film> Search(string type, string param, ViewedType viewedType)
+        /// <summary>
+        /// Поиск в таблице фильмов
+        /// </summary>
+        /// <param name="type">столбец</param>
+        /// <param name="param">значение</param>
+        /// <param name="viewedType">просмотрено ли</param>
+        /// <returns></returns>
+        public IList<Film> SearchTableFilms(string type, string param, ViewedType viewedType)
         {
             IQuery query;
             switch (viewedType)
             {
                 case ViewedType.Full:
-                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " = :param");
+                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " :param");
                     query.SetParameter("param", param);
                     return query.List<Film>();
                 case ViewedType.TRUE:
-                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " = :param and f.Viewed = true");
+                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " :param AND f.Viewed = true");
                     query.SetParameter("param", param);
                     return query.List<Film>();
                 case ViewedType.FALSE:
-                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " = :param and f.Viewed = false");
+                    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " :param AND f.Viewed = false");
                     query.SetParameter("param", param);
                     return query.List<Film>();
             }
             return null;
-        }            
-        public void JoinSearch(Film obj)
+        }
+        public IList<Film> SearchFilmsGenre(string param, ViewedType viewedType)
         {
-            //using (ISession session = Singleton.Instance.OpenSession())
-            //{
-            //    using (ITransaction transaction = session.BeginTransaction())
-            //    {
-            //        List<Films_Genres> tmpList = GetFilmGenres(obj);
-            //        foreach (var item in tmpList)
-            //            session.Save(item);
-            //        transaction.Commit();
-            //    }
-            //}
-            //IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT f from Film INNER JOIN SubTuble_Genres_Film s WHERE SubTuble_Genres_Film.Id_Film = 8 AND SubTuble_Genres_Film.Id_Genres = Боевик");
-            //IList<Film> list = query.List<Film>();
-            //foreach (var arr in list)
-            //{
-            //    Console.WriteLine(arr.Title);
-            //}
-        }        
+            IQuery query;
+            switch (viewedType)
+            {
+                //case ViewedType.Full:
+                //    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " :param");
+                //    query.SetParameter("param", param);
+                //    return query.List<Film>();
+                //case ViewedType.TRUE:
+                //    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " :param AND f.Viewed = true");
+                //    query.SetParameter("param", param);
+                //    return query.List<Film>();
+                //case ViewedType.FALSE:
+                //    query = Singleton.Instance.OpenSession().CreateQuery("SELECT f FROM Film f WHERE f." + type + " :param AND f.Viewed = false");
+                //    query.SetParameter("param", param);
+                //    return query.List<Film>();
+            }
+            return null;
+        }
     }
 }

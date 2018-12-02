@@ -148,20 +148,20 @@ namespace LR2.Controller
                         switch (vewedKey)
                         {
                             case 0:
-                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("Title", tmpStr, RepositoryFilm.ViewedType.Full));
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchTableFilms("Title =", tmpStr, RepositoryFilm.ViewedType.Full));
                                 break;
                             case 1:
-                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("Title", tmpStr, RepositoryFilm.ViewedType.TRUE));
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchTableFilms("Title =", tmpStr, RepositoryFilm.ViewedType.TRUE));
                                 break;                                
                             case 2:
-                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).Search("Title", tmpStr, RepositoryFilm.ViewedType.FALSE));
+                                PrintCMD.Film.PrintTable((Singleton.Instance.Film as RepositoryFilm).SearchTableFilms("Title =", tmpStr, RepositoryFilm.ViewedType.FALSE));
                                 break;
                         }
                         PrintCMD.ReadKey("enter -> 1", false);
                         break;
                     case 2://жанр
                         tmpStr = PrintCMD.ReadLine("жанр", false);
-                        vewedKey = PrintCMD.ReadKey("0 - всё 1 - просмотрено 2 - непросмотрено", false);
+                        vewedKey = PrintCMD.ReadKey("0 - всё \n 1 - просмотрено \n 2 - непросмотрено", false);
                         //switch (vewedKey)
                         //{
                         //    case 0:
@@ -185,7 +185,7 @@ namespace LR2.Controller
                     case 0:
                         tmp = false;
                         break;
-                }
+                }                
             }
         }
         //дополнительные функции
