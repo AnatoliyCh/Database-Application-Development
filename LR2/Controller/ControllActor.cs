@@ -114,7 +114,7 @@ namespace LR2.Controller
         /// </summary>
         public void Search()
         {
-            throw new NotImplementedException();
+            
         }
         
     }

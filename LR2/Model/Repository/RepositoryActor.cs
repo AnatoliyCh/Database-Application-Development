@@ -51,9 +51,18 @@ namespace LR2.Model.Repository
                 using (ITransaction transaction = session.BeginTransaction())
                 {
                     IQuery query = Singleton.Instance.OpenSession().CreateQuery("DELETE FROM Actor a WHERE a." + type + " = :param");
-                    if (type == "Id") query.SetParameter("param", int.Parse(param)).ExecuteUpdate();
-                    else query.SetParameter("param", param).ExecuteUpdate();
+                    if (type == "Id")
+                    {
+                        DeleteCascadeTable(int.Parse(param));
+                        query.SetParameter("param", int.Parse(param)).ExecuteUpdate();
+                    }
+                    else
+                    {
+                        DeleteCascadeTable(Singleton.Instance.Actor.Read(type, param)[0].Id);
+                        query.SetParameter("param", param).ExecuteUpdate();
+                    }
                 }
+                
             }
         }
         void IRepository<Actor>.Delete(Actor obj)
@@ -62,6 +71,8 @@ namespace LR2.Model.Repository
             {
                 using (ITransaction transaction = session.BeginTransaction())
                 {
+                    DeleteCascadeTable(obj.Id);
+                    session.Delete(obj);
                     transaction.Commit();
                 }
             }
@@ -71,6 +82,19 @@ namespace LR2.Model.Repository
             IQuery query = Singleton.Instance.OpenSession().CreateQuery("SELECT count(*) FROM Actor");
             return (long)query.UniqueResult();
         }
-        
+
+        //удаляем в связанных таблицаx
+        private void DeleteCascadeTable(int id)
+        {
+            using (ISession session = Singleton.Instance.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+
+                    IQuery query = Singleton.Instance.OpenSession().CreateQuery("DELETE FROM Films_Actors fa WHERE fa.Id_Actors = :param");
+                    query.SetParameter("param", id).ExecuteUpdate();
+                }
+            }
+        }
     }
 }

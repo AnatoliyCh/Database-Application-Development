@@ -57,7 +57,7 @@ namespace LR2.Model.Repository
             using (ISession session = Singleton.Instance.OpenSession())
             {
                 using (ITransaction transaction = session.BeginTransaction())
-                {                    
+                {
                     session.Update(obj);
                     transaction.Commit();
                 }
@@ -138,14 +138,32 @@ namespace LR2.Model.Repository
             query.SetParameter("param", obj.Id);
             foreach (var item in query.List<Films_Genres>())
                 tmpList.Add(Singleton.Instance.Genre.Read("Id", item.Id_Genres.ToString())[0]);
-            tmpList = SortListGenre(tmpList, query.List<Films_Genres>());//сортировка по Index_List
+            //tmpList = SortListGenre(tmpList, query.List<Films_Genres>());//сортировка по Index_List
             return tmpList;
         }
         //обновление связанных строчек с фильмом в таблице Films_Genres
         private void UpdateFilms_Genres(Film obj)
         {
             DeleteFilms_Genres("Id", obj.Id);
-            CreateFilms_Genres(obj);//опирации равные
+            using (ISession session = Singleton.Instance.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    int i = 0;
+                    foreach (var item in obj.GenresList)
+                    {
+                        Films_Genres tmpFG = new Films_Genres()
+                        {
+                            Id_Film = obj.Id,
+                            Id_Genres = item.Id,
+                            Index_List = i
+                        };
+                        session.Save(tmpFG);
+                        i++;
+                    }
+                    transaction.Commit();
+                }
+            }
         }
         //удаление связанных строчек с фильмом в таблице Films_Genres
         private void DeleteFilms_Genres(string type, int id_Film, string param = "")
@@ -177,7 +195,7 @@ namespace LR2.Model.Repository
                     if (item.Index_List == minId)
                         tmpList.Add((listGenre as List<Genre>)[(listGenre as List<Genre>).FindIndex(obj => Equals(obj.Id, item.Id_Genres))]);
                 minId++;
-            }                
+            }
             return tmpList;
         }
         //возвращаем лист id фильмов с id жанров
@@ -219,14 +237,32 @@ namespace LR2.Model.Repository
             query.SetParameter("param", obj.Id);
             foreach (var item in query.List<Films_Actors>())
                 tmpList.Add(Singleton.Instance.Actor.Read("Id", item.Id_Actors.ToString())[0]);
-            tmpList = SortListActors(tmpList, query.List<Films_Actors>());//сортировка по Index_List
+            //tmpList = SortListActors(tmpList, query.List<Films_Actors>());//сортировка по Index_List
             return tmpList;
         }
         //обновление связанных строчек с фильмом в таблице Films_Actors
         private void UpdateFilms_Actors(Film obj)
         {
             DeleteFilms_Actors("Id", obj.Id);
-            CreateFilms_Actors(obj);//опирации равные
+            using (ISession session = Singleton.Instance.OpenSession())
+            {
+                using (ITransaction transaction = session.BeginTransaction())
+                {
+                    int i = 0;
+                    foreach (var item in obj.ActorsList)
+                    {
+                        Films_Actors tmpFG = new Films_Actors()
+                        {
+                            Id_Film = obj.Id,
+                            Id_Actors = item.Id,
+                            Index_List = i
+                        };
+                        session.Save(tmpFG);
+                        i++;
+                    }
+                    transaction.Commit();
+                }
+            }
         }
         //удаление связанных строчек с фильмом в таблице Films_Actors
         private void DeleteFilms_Actors(string type, int id_Film, string param = "")

@@ -69,7 +69,6 @@ namespace LR2.Controller
         public void Update()
         {
             int key;
-            Film film;//то что изменяем
             string tmpTitle;//новое название
             bool tmp = true;
             while (tmp)
@@ -81,19 +80,12 @@ namespace LR2.Controller
                 {
                     case 1://изменение по Id
                         int id = PrintCMD.ReadKey("Id", false);
-                        film = Singleton.Instance.Film.Read("Id", id.ToString())[0];
-                        tmpTitle = PrintCMD.ReadLine(film.Title, false);
-                        film.Title = tmpTitle;
-                        Singleton.Instance.Film.Update(film);
-                        film = null; tmpTitle = null;
+                        SubUpdate(Singleton.Instance.Film.Read("Id", id.ToString())[0]);
                         break;
                     case 2://изменение по Title
-                        tmpTitle = PrintCMD.ReadLine("Имя", false);
-                        film = Singleton.Instance.Film.Read("Name", tmpTitle)[0];
-                        tmpTitle = PrintCMD.ReadLine(film.Title, false);
-                        film.Title = tmpTitle;
-                        Singleton.Instance.Film.Update(film);
-                        film = null; tmpTitle = null;
+                        tmpTitle = PrintCMD.ReadLine("название", false);
+                        SubUpdate(Singleton.Instance.Film.Read("Title", tmpTitle)[0]);
+                        tmpTitle = null;
                         break;
                     case 0:
                         tmp = false;
@@ -266,6 +258,76 @@ namespace LR2.Controller
                         break;
                     case 6://готово
                         Singleton.Instance.Film.Create(film);
+                        tmp = false;
+                        break;
+                    case 0://назад
+                        tmp = false;
+                        break;
+                }
+            }
+        }
+        private void SubUpdate(Film film)//меню создания фильма
+        {
+            int key;
+            bool tmp = true;
+            string strTmp;//строковый параметр
+            int tmpId;//числ параметр
+            while (tmp)
+            {
+                PrintCMD.Film.CurrentFilm(film);
+                PrintCMD.Film.SubUpdateMenu();
+                key = PrintCMD.ReadKey();
+                switch (key)
+                {
+                    case 1://назвение
+                        strTmp = PrintCMD.ReadLine("название", false);
+                        film.Title = strTmp;
+                        break;
+                    case 2://жанр +
+                        if (Singleton.Instance.Genre.GetAmountElements() > 0)
+                        {
+                            PrintCMD.Genre.PrintTable();
+                            tmpId = PrintCMD.ReadKey("Id жанра", false);
+                            Genre genre = Singleton.Instance.Genre.Read("Id", tmpId.ToString())[0];
+                            if (!EqualsGenre(film.GenresList as List<Genre>, genre))
+                                film.GenresList.Add(genre);
+                        }
+                        break;
+                    case 3://жанр -
+                        if (film.GenresList.Count > 0)
+                        {
+                            tmpId = PrintCMD.ReadKey("Id жанра", false);
+                            try { (film.GenresList as List<Genre>).RemoveAt(tmpId - 1); }
+                            catch (Exception) { }
+                        }
+                        break;
+                    case 4://актёр +
+                        if (Singleton.Instance.Actor.GetAmountElements() > 0)
+                        {
+                            PrintCMD.Actor.PrintTable();
+                            tmpId = PrintCMD.ReadKey("Id актёра", false);
+                            Actor actor = Singleton.Instance.Actor.Read("Id", tmpId.ToString())[0];
+                            if (!EqualsActor(film.ActorsList as List<Actor>, actor))
+                                film.ActorsList.Add(actor);
+                        }
+                        break;
+                    case 5://актёры -
+                        if (film.ActorsList.Count > 0)
+                        {
+                            tmpId = PrintCMD.ReadKey("Id актёра", false);
+                            try { (film.GenresList as List<Actor>).RemoveAt(tmpId - 1); }
+                            catch (Exception) { }
+                        }
+                        break;
+                    case 6://рейтинг
+                        strTmp = PrintCMD.ReadLine("рейтинг", false);
+                        film.Rating = Convert.ToSingle(strTmp);
+                        break;
+                    case 7://просмотрено
+                        film.Viewed = !film.Viewed;
+                        break;
+                    case 8://готово
+                        Singleton.Instance.Film.Update(film);
                         tmp = false;
                         break;
                     case 0://назад
